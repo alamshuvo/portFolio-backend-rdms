@@ -1,7 +1,8 @@
+import { Projects } from "@prisma/client";
 import { prisma } from "../../../shared/prisma";
 import { IAuthUser } from "../../interface/common";
 
-const insertIntoDb = async (payload: any, user: IAuthUser) => {
+const insertIntoDb = async (payload: Projects, user: IAuthUser) => {
   const isAdminExist = await prisma.admin.findFirstOrThrow({
     where: {
       email: user?.email,
@@ -53,7 +54,7 @@ const deleteSingleProject = async (id: string) => {
   return projectData;
 };
 
-const updateSingleProject = async (id: string, payload: any) => {
+const updateSingleProject = async (id: string, payload: Partial<Projects>) => {
   const projectData = await prisma.projects.update({
     where: {
       id,
