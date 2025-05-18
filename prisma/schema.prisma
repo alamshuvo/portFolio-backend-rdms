@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+model Admin {
+  id           String       @id @default(uuid())
+  name         String
+  email        String
+  password     String
+  profilePhoto String?
+  role         UserRole     @default(ADMIN)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  Projects     Projects[]
+  Blogs        Blogs[]
+  Course       Course[]
+  Experience   Experience[]
+
+  @@map("admin")
+}
+
+model Projects {
+  id                 String   @id @default(uuid())
+  adminId            String
+  projectsName       String
+  liveLink           String
+  githubFrontendLink String?
+  githubBackendLink  String?
+  projectPhoto       String?
+  backendLiveLink    String?
+  deployedIn         String   @default("Vercel")
+  description        String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  admin              Admin    @relation(fields: [adminId], references: [id])
+
+  @@map("projects")
+}
+
+model Blogs {
+  id           String  @id @default(uuid())
+  adminId      String
+  blogsName    String
+  title        String
+  description  String
+  photo        String?
+  externalLink String?
+  admin        Admin   @relation(fields: [adminId], references: [id])
+
+  @@map("blogs")
+}
+
+model Course {
+  id          String  @id @default(uuid())
+  adminId     String
+  courseName  String
+  duration    String?
+  certificate String?
+  admin       Admin   @relation(fields: [adminId], references: [id])
+
+  @@map("courses")
+}
+
+model Experience {
+  id              String  @id @default(uuid())
+  adminId         String
+  companyLocation String?
+  companyName     String?
+  role            String?
+  admin           Admin   @relation(fields: [adminId], references: [id])
+}
