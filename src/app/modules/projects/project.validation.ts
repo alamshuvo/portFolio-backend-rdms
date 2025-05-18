@@ -14,6 +14,21 @@ export const projectValidation = z.object({
   }),
 });
 
+export const updateProjectValidation = z.object({
+    body: z.object({
+      adminId: z.string().optional(),
+      projectsName: z.string().optional(),
+      liveLink: z.string().optional(),
+      githubFrontendLink: z.string().optional(),
+      githubBackendLink: z.string().optional(),
+      projectPhoto: z.string().optional(),
+      backendLiveLink: z.string().optional(),
+      deployedIn: z.string().optional(),
+      description: z.string().optional(),
+    }),
+  });
+
 export const projectValidationSchema = {
-    projectValidation
+    projectValidation,
+    updateProjectValidation
 }

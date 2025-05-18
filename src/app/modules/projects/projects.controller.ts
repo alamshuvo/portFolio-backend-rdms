@@ -39,8 +39,33 @@ const insertIntoDb = catchAsync(async (req: Request &{user?:IAuthUser}, res: Res
     });
   });
 
+  const deleteProject = catchAsync(async (req: Request , res: Response) => {
+    const id = req.params.id;
+    const result = await projectService.deleteSingleProject(id);
+    sendResponse(res, {
+      statusCode: status.OK,
+      success: true,
+      message: "Single Projects delete successfully",
+      data: result,
+    });
+  });
+
+  const updateProject = catchAsync(async (req: Request , res: Response) => {
+    const id = req.params.id;
+    const data = req.body;
+    const result = await projectService.updateSingleProject(id,data );
+    sendResponse(res, {
+      statusCode: status.OK,
+      success: true,
+      message: "Single Projects update  successfully",
+      data: result,
+    });
+  });
+
 export const projectController = {
     insertIntoDb,
     getAllProjects,
-    getSingleProject
+    getSingleProject,
+    deleteProject,
+    updateProject
 }

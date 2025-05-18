@@ -44,8 +44,28 @@ const getSingleProject = async (id: string) => {
   return projectData;
 };
 
+const deleteSingleProject = async (id: string) => {
+  const projectData = await prisma.projects.delete({
+    where: {
+      id,
+    },
+  });
+  return projectData;
+};
+
+const updateSingleProject = async (id: string, payload: any) => {
+  const projectData = await prisma.projects.update({
+    where: {
+      id,
+    },
+    data: payload,
+  });
+  return projectData;
+};
 export const projectService = {
   insertIntoDb,
   getAllProjects,
   getSingleProject,
+  deleteSingleProject,
+  updateSingleProject,
 };
