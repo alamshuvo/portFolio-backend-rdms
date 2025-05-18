@@ -11,6 +11,18 @@ export const blogValidation = z.object({
     }),
   });
 
+  export const updateblogValidation = z.object({
+    body: z.object({
+      adminId: z.string().optional(),
+      blogsName: z.string().optional(),
+      title: z.string().optional(),
+      description: z.string().optional(),
+      photo: z.string().optional(),
+      externalLink: z.string().optional(),
+    }),
+  });
+
   export const blogsValidationSchema = {
-    blogValidation
+    blogValidation,
+    updateblogValidation
   }

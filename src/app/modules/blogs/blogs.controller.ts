@@ -37,8 +37,34 @@ const insertIntoDb = catchAsync(async (req: Request &{user?:IAuthUser}, res: Res
       data: result,
     });
   });
+
+
+  const deleteblogs = catchAsync(async (req: Request , res: Response) => {
+    const id = req.params.id;
+    const result = await blogsService.deleteBlogs(id);
+    sendResponse(res, {
+      statusCode: status.OK,
+      success: true,
+      message: "Single blogs delete successfully",
+      data: result,
+    });
+  });
+
+  const updateBlogs = catchAsync(async (req: Request , res: Response) => {
+    const id = req.params.id;
+    const data = req.body;
+    const result = await blogsService.updateBlogs(id,data );
+    sendResponse(res, {
+      statusCode: status.OK,
+      success: true,
+      message: "Single blogs  update  successfully",
+      data: result,
+    });
+  });
 export const blogsController = {
     insertIntoDb,
     getAllBlogs,
-    getSingleBlogs
+    getSingleBlogs,
+    deleteblogs,
+    updateBlogs
 }

@@ -8,5 +8,6 @@ const router = express.Router();
 router.get("/",blogsController.getAllBlogs)
 router.get("/:id",blogsController.getSingleBlogs)
 router.post("/",auth(UserRole.ADMIN),validateRequest(blogsValidationSchema.blogValidation),blogsController.insertIntoDb)
-
+router.delete("/:id",auth(UserRole.ADMIN),blogsController.deleteblogs)
+router.patch("/:id",auth(UserRole.ADMIN),validateRequest(blogsValidationSchema.updateblogValidation),blogsController.updateBlogs)
 export const blogsRoutes = router;

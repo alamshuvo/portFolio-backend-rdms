@@ -40,8 +40,29 @@ const insertIntoDb = async (payload: Blogs, user: IAuthUser) => {
     });
     return projectData;
   };
+
+  const deleteBlogs = async (id: string) => {
+    const projectData = await prisma.blogs.delete({
+      where: {
+        id,
+      },
+    });
+    return projectData;
+  };
+  
+  const updateBlogs = async (id: string, payload: Partial<Blogs>) => {
+    const projectData = await prisma.blogs.update({
+      where: {
+        id,
+      },
+      data: payload,
+    });
+    return projectData;
+  };
   export const blogsService = {
     insertIntoDb,
     getAllblogs,
-    getSingleblogs
+    getSingleblogs,
+    deleteBlogs,
+    updateBlogs
   }
