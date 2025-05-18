@@ -2,8 +2,9 @@ import { UserRole } from "@prisma/client";
 import { prisma } from "../../../shared/prisma";
 import bcrypt from 'bcrypt'
 import config from "../../../config";
-import { Secret } from "jsonwebtoken";
+import { JwtPayload, Secret } from "jsonwebtoken";
 import generateToken from "../../../helpers/generateToken";
+import verifyToken from "../../../helpers/verifyToken";
 const loginUser = async (payload: { email: string; password: string }) => {
     //check is user data exist
     const userData = await prisma.admin.findFirstOrThrow({
@@ -39,7 +40,40 @@ const loginUser = async (payload: { email: string; password: string }) => {
       refreshToken,
     };
   };
+
+
+
+  const refreshToken = async (token: string) => {
+    let decodedData;
+    try {
+      decodedData = verifyToken(
+        token,
+        config.jwt.refreshTokenSecret as Secret
+      ) as JwtPayload;
+    } catch (error) {
+      throw new Error("you are not authorized");
+    }
+    const userData = await prisma.admin.findFirstOrThrow({
+      where: {
+        email: decodedData?.email,
+        role: UserRole.ADMIN,
+      },
+    });
+    const accessToken = generateToken(
+      {
+        email: userData.email,
+        role: userData.role,
+      },
+      config.jwt.jwtAccessToken as Secret,
+      config.jwt.jwtExpiresIn as string
+    );
+    return {
+      accessToken,
+      refreshToken,
+    };
+  };
   export const authService = {
     loginUser,
+    refreshToken
     
   };

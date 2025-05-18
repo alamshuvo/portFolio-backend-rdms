@@ -1,6 +1,7 @@
 generator client {
   provider = "prisma-client-js"
 }
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -24,6 +25,7 @@ model Admin {
   Blogs        Blogs[]
   Course       Course[]
   Experience   Experience[]
+  Skills       Skills[]
 
   @@map("admin")
 }
@@ -77,4 +79,13 @@ model Experience {
   companyName     String?
   role            String?
   admin           Admin   @relation(fields: [adminId], references: [id])
+}
+
+model Skills {
+  id          String  @id @default(uuid())
+  adminId     String
+  title       String
+  description String
+  photo       String?
+  admin       Admin   @relation(fields: [adminId], references: [id])
 }
