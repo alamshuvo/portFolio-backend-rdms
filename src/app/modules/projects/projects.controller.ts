@@ -17,6 +17,30 @@ const insertIntoDb = catchAsync(async (req: Request &{user?:IAuthUser}, res: Res
     });
   });
 
+  const getAllProjects = catchAsync(async (req: Request , res: Response) => {
+
+    const result = await projectService.getAllProjects();
+    sendResponse(res, {
+      statusCode: status.OK,
+      success: true,
+      message: "All Projects retrived successfully",
+      data: result,
+    });
+  });
+
+  const getSingleProject = catchAsync(async (req: Request , res: Response) => {
+    const id = req.params.id;
+    const result = await projectService.getSingleProject(id);
+    sendResponse(res, {
+      statusCode: status.OK,
+      success: true,
+      message: "Single Projects retrived successfully",
+      data: result,
+    });
+  });
+
 export const projectController = {
-    insertIntoDb
+    insertIntoDb,
+    getAllProjects,
+    getSingleProject
 }

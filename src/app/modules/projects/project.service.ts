@@ -14,9 +14,38 @@ const insertIntoDb = async (payload: any, user: IAuthUser) => {
   const projectDatas = await prisma.projects.create({
     data: projectData,
   });
-  return projectDatas
+  return projectDatas;
+};
+
+const getAllProjects = async () => {
+  const allData = await prisma.projects.findMany({
+    select: {
+      id: true,
+      projectsName: true,
+      liveLink: true,
+      githubFrontendLink: true,
+      githubBackendLink: true,
+      projectPhoto: true,
+      backendLiveLink: true,
+      deployedIn: true,
+      description: true,
+      admin: true,
+    },
+  });
+  return allData;
+};
+
+const getSingleProject = async (id: string) => {
+  const projectData = await prisma.projects.findUniqueOrThrow({
+    where: {
+      id,
+    },
+  });
+  return projectData;
 };
 
 export const projectService = {
   insertIntoDb,
+  getAllProjects,
+  getSingleProject,
 };
