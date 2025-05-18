@@ -3,6 +3,7 @@ import { AdminRoutes } from "../modules/admin/admin.routes";
 import { projectsRoutes } from "../modules/projects/projects.route";
 import { authRoutes } from "../modules/auth/auth.route";
 import { blogsRoutes } from "../modules/blogs/blogs.routes";
+import { courseRoutes } from "../modules/course/course.routes";
 const router = express.Router();
 
 const moduleRoutes = [
@@ -22,6 +23,10 @@ const moduleRoutes = [
     path: "/blogs",
     route: blogsRoutes,
   },
+  {
+    path:"/course",
+    route:courseRoutes
+  }
 ];
 
 moduleRoutes.forEach((route) => {
