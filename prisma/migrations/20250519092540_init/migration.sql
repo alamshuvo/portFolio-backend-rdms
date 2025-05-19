@@ -68,6 +68,17 @@ CREATE TABLE "Experience" (
     CONSTRAINT "Experience_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Skills" (
+    "id" TEXT NOT NULL,
+    "adminId" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "photo" TEXT,
+
+    CONSTRAINT "Skills_pkey" PRIMARY KEY ("id")
+);
+
 -- AddForeignKey
 ALTER TABLE "projects" ADD CONSTRAINT "projects_adminId_fkey" FOREIGN KEY ("adminId") REFERENCES "admin"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
@@ -79,3 +90,6 @@ ALTER TABLE "courses" ADD CONSTRAINT "courses_adminId_fkey" FOREIGN KEY ("adminI
 
 -- AddForeignKey
 ALTER TABLE "Experience" ADD CONSTRAINT "Experience_adminId_fkey" FOREIGN KEY ("adminId") REFERENCES "admin"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Skills" ADD CONSTRAINT "Skills_adminId_fkey" FOREIGN KEY ("adminId") REFERENCES "admin"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

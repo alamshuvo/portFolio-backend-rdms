@@ -26,17 +26,17 @@ const moduleRoutes = [
     route: blogsRoutes,
   },
   {
-    path:"/course",
-    route:courseRoutes
+    path: "/course",
+    route: courseRoutes,
   },
   {
-    path:"/experience",
-    route:experienceRoutes
+    path: "/experience",
+    route: experienceRoutes,
   },
   {
-    path:"/skills",
-    route:skillsRoutes
-  }
+    path: "/skills",
+    route: skillsRoutes,
+  },
 ];
 
 moduleRoutes.forEach((route) => {
