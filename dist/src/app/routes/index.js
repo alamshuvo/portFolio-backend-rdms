@@ -11,6 +11,7 @@ const blogs_routes_1 = require("../modules/blogs/blogs.routes");
 const course_routes_1 = require("../modules/course/course.routes");
 const experience_routes_1 = require("../modules/experience /experience.routes");
 const skills_routes_1 = require("../modules/skills/skills.routes");
+const meta_routes_1 = require("../modules/meta/meta.routes");
 const router = express_1.default.Router();
 const moduleRoutes = [
     {
@@ -41,6 +42,10 @@ const moduleRoutes = [
         path: "/skills",
         route: skills_routes_1.skillsRoutes,
     },
+    {
+        path: "/meta",
+        route: meta_routes_1.MetaRoutes
+    }
 ];
 moduleRoutes.forEach((route) => {
     router.use(route.path, route.route);

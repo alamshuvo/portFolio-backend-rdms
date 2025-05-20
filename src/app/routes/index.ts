@@ -6,6 +6,7 @@ import { blogsRoutes } from "../modules/blogs/blogs.routes";
 import { courseRoutes } from "../modules/course/course.routes";
 import { experienceRoutes } from "../modules/experience /experience.routes";
 import { skillsRoutes } from "../modules/skills/skills.routes";
+import { MetaRoutes } from "../modules/meta/meta.routes";
 const router = express.Router();
 
 const moduleRoutes = [
@@ -37,6 +38,10 @@ const moduleRoutes = [
     path: "/skills",
     route: skillsRoutes,
   },
+  {
+    path:"/meta",
+    route:MetaRoutes
+  }
 ];
 
 moduleRoutes.forEach((route) => {
