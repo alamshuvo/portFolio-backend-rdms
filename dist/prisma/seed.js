@@ -40,8 +40,5 @@ const seedAdmin = () => __awaiter(void 0, void 0, void 0, function* () {
     catch (error) {
         console.log(error);
     }
-    finally {
-        yield prisma_1.prisma.$disconnect();
-    }
 });
 seedAdmin();

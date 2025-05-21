@@ -43,5 +43,5 @@ const refreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
 }));
 exports.authController = {
     loginUser,
-    refreshToken
+    refreshToken,
 };

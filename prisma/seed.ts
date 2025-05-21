@@ -28,9 +28,6 @@ try {
 } catch (error) {
     console.log(error);
 }
-finally{
-    await prisma.$disconnect();
-}
 }
 
 seedAdmin()

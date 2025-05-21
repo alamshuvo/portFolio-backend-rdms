@@ -1,13 +1,18 @@
 import { Projects } from "@prisma/client";
 import { prisma } from "../../../shared/prisma";
 import { IAuthUser } from "../../interface/common";
+import ApiError from "../../errors/apiError";
+import status from "http-status";
 
 const insertIntoDb = async (payload: Projects, user: IAuthUser) => {
-  const isAdminExist = await prisma.admin.findFirstOrThrow({
+  const isAdminExist = await prisma.admin.findUnique({
     where: {
       email: user?.email,
     },
   });
+  if (!isAdminExist) {
+    throw new ApiError(status.NOT_FOUND,"admin Does not exist")
+  }
   const projectData = {
     ...payload,
     adminId: isAdminExist.id,
@@ -37,7 +42,7 @@ const getAllProjects = async () => {
 };
 
 const getSingleProject = async (id: string) => {
-  const projectData = await prisma.projects.findUniqueOrThrow({
+  const projectData = await prisma.projects.findUnique({
     where: {
       id,
     },

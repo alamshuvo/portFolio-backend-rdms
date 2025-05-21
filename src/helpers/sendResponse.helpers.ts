@@ -2,22 +2,26 @@ import { Response } from "express";
 
 const sendResponse = <T>(
   res: Response,
-  jsonData: {
+  {
+    statusCode,
+    success,
+    message,
+    meta,
+    data,
+  }: {
     statusCode: number;
     success: boolean;
     message: string;
     meta?: { page: number; limit: number; total: number };
-    data: T | null | undefined | T[];
+    data: T | T[] | null | undefined;
   }
 ) => {
-  const { statusCode, success, message, meta, data } = jsonData;
-
   res.status(statusCode).json({
     statusCode,
     success,
     message,
-    meta: meta || null || undefined,
-    data: data || null || undefined,
+    meta: meta ?? null,
+    data: data ?? null,
   });
 };
 

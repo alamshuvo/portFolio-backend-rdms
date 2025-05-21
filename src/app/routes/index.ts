@@ -39,9 +39,9 @@ const moduleRoutes = [
     route: skillsRoutes,
   },
   {
-    path:"/meta",
-    route:MetaRoutes
-  }
+    path: "/meta",
+    route: MetaRoutes,
+  },
 ];
 
 moduleRoutes.forEach((route) => {

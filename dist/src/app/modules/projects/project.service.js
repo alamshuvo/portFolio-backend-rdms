@@ -8,15 +8,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.projectService = void 0;
 const prisma_1 = require("../../../shared/prisma");
+const apiError_1 = __importDefault(require("../../errors/apiError"));
+const http_status_1 = __importDefault(require("http-status"));
 const insertIntoDb = (payload, user) => __awaiter(void 0, void 0, void 0, function* () {
-    const isAdminExist = yield prisma_1.prisma.admin.findFirstOrThrow({
+    const isAdminExist = yield prisma_1.prisma.admin.findUnique({
         where: {
             email: user === null || user === void 0 ? void 0 : user.email,
         },
     });
+    if (!isAdminExist) {
+        throw new apiError_1.default(http_status_1.default.NOT_FOUND, "admin Does not exist");
+    }
     const projectData = Object.assign(Object.assign({}, payload), { adminId: isAdminExist.id });
     const projectDatas = yield prisma_1.prisma.projects.create({
         data: projectData,
@@ -41,7 +49,7 @@ const getAllProjects = () => __awaiter(void 0, void 0, void 0, function* () {
     return allData;
 });
 const getSingleProject = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const projectData = yield prisma_1.prisma.projects.findUniqueOrThrow({
+    const projectData = yield prisma_1.prisma.projects.findUnique({
         where: {
             id,
         },

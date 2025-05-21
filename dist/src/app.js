@@ -28,6 +28,6 @@ app.get("/", (req, res) => {
     });
 });
 app.use("/api/v1", routes_1.default);
-app.use(gobalErrorHandler_1.default);
 app.use(notFound_1.default);
+app.use(gobalErrorHandler_1.default);
 exports.default = app;

@@ -8,6 +8,7 @@ const globalErrorHandler = (
   res: Response,
   next: NextFunction
 ) => {
+  console.log(res.headersSent,"global");
   let statusCode = status.INTERNAL_SERVER_ERROR;
   let success = false;
   let message = err.name || err.message || "Something went wrong";
@@ -27,7 +28,7 @@ const globalErrorHandler = (
     error,
     stack: err.stack,
   });
-  next();
+ next()
 };
 
 export default globalErrorHandler;

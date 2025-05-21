@@ -44,8 +44,8 @@ const moduleRoutes = [
     },
     {
         path: "/meta",
-        route: meta_routes_1.MetaRoutes
-    }
+        route: meta_routes_1.MetaRoutes,
+    },
 ];
 moduleRoutes.forEach((route) => {
     router.use(route.path, route.route);

@@ -19,14 +19,19 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const config_1 = __importDefault(require("../../../config"));
 const generateToken_1 = __importDefault(require("../../../helpers/generateToken"));
 const verifyToken_1 = __importDefault(require("../../../helpers/verifyToken"));
+const apiError_1 = __importDefault(require("../../errors/apiError"));
+const http_status_1 = __importDefault(require("http-status"));
 const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     //check is user data exist
-    const userData = yield prisma_1.prisma.admin.findFirstOrThrow({
+    const userData = yield prisma_1.prisma.admin.findUnique({
         where: {
             email: payload.email,
             role: client_1.UserRole.ADMIN,
         },
     });
+    if (!userData) {
+        throw new apiError_1.default(http_status_1.default.NOT_FOUND, "admin Does not exist");
+    }
     // check is password correct
     const isCorrectPassword = yield bcrypt_1.default.compare(payload.password, userData.password);
     if (!isCorrectPassword) {
@@ -51,12 +56,15 @@ const refreshToken = (token) => __awaiter(void 0, void 0, void 0, function* () {
     catch (error) {
         throw new Error("you are not authorized");
     }
-    const userData = yield prisma_1.prisma.admin.findFirstOrThrow({
+    const userData = yield prisma_1.prisma.admin.findUnique({
         where: {
             email: decodedData === null || decodedData === void 0 ? void 0 : decodedData.email,
             role: client_1.UserRole.ADMIN,
         },
     });
+    if (!userData) {
+        throw new apiError_1.default(http_status_1.default.NOT_FOUND, "admin Does not exist");
+    }
     const accessToken = (0, generateToken_1.default)({
         email: userData.email,
         role: userData.role,

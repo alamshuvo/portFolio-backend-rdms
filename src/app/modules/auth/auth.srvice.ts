@@ -5,14 +5,19 @@ import config from "../../../config";
 import { JwtPayload, Secret } from "jsonwebtoken";
 import generateToken from "../../../helpers/generateToken";
 import verifyToken from "../../../helpers/verifyToken";
+import ApiError from "../../errors/apiError";
+import status from "http-status";
 const loginUser = async (payload: { email: string; password: string }) => {
     //check is user data exist
-    const userData = await prisma.admin.findFirstOrThrow({
+    const userData = await prisma.admin.findUnique({
       where: {
         email: payload.email,
         role: UserRole.ADMIN,
       },
     });
+    if (!userData) {
+      throw new ApiError(status.NOT_FOUND,"admin Does not exist")
+    }
     // check is password correct
     const isCorrectPassword = await bcrypt.compare(
       payload.password,
@@ -53,12 +58,15 @@ const loginUser = async (payload: { email: string; password: string }) => {
     } catch (error) {
       throw new Error("you are not authorized");
     }
-    const userData = await prisma.admin.findFirstOrThrow({
+    const userData = await prisma.admin.findUnique({
       where: {
         email: decodedData?.email,
         role: UserRole.ADMIN,
       },
     });
+    if (!userData) {
+      throw new ApiError(status.NOT_FOUND,"admin Does not exist")
+    }
     const accessToken = generateToken(
       {
         email: userData.email,

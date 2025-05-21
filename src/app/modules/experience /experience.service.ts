@@ -1,13 +1,18 @@
 import { Course, Experience } from "@prisma/client";
 import { IAuthUser } from "../../interface/common";
 import { prisma } from "../../../shared/prisma";
+import ApiError from "../../errors/apiError";
+import status from "http-status";
 
 const insertIntoDb = async (payload: Experience, user: IAuthUser) => {
-  const isAdminExist = await prisma.admin.findFirstOrThrow({
+  const isAdminExist = await prisma.admin.findUnique({
     where: {
       email: user?.email,
     },
   });
+  if (!isAdminExist) {
+    throw new ApiError(status.NOT_FOUND,"admin Does not exist")
+  }
   const ExperienceData = {
     ...payload,
     adminId: isAdminExist.id,
@@ -32,7 +37,7 @@ const getAllExperience = async () => {
 };
 
 const getSingleExperience = async (id: string) => {
-  const experienceData = await prisma.experience.findUniqueOrThrow({
+  const experienceData = await prisma.experience.findUnique({
     where: {
       id,
     },

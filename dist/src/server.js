@@ -20,22 +20,22 @@ function main() {
         const server = app_1.default.listen(port, () => {
             console.log(`Server is running on port ${port}`);
         });
-        const exitHandler = () => __awaiter(this, void 0, void 0, function* () {
-            if (server) {
-                server.close(() => {
-                    console.log("Server close");
-                });
-            }
-            process.exit(1);
-        });
-        process.on("uncaughtException", (error) => {
-            console.log(error);
-            exitHandler();
-        });
-        process.on("unhandledRejection", (error) => {
-            console.log(error);
-            exitHandler();
-        });
+        // const exitHandler = async () => {
+        //   if (server) {
+        //     server.close(() => {
+        //       console.log("Server close");
+        //     });
+        //   }
+        //   process.exit(1);
+        // };
+        // process.on("uncaughtException", (error) => {
+        //   console.log(error);
+        //   exitHandler();
+        // });
+        // process.on("unhandledRejection", (error) => {
+        //   console.log(error);
+        //   exitHandler();
+        // });
     });
 }
 main();
