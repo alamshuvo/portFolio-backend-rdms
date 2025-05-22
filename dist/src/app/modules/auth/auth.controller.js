@@ -19,6 +19,7 @@ const http_status_1 = __importDefault(require("http-status"));
 const auth_srvice_1 = require("./auth.srvice");
 const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
+    console.log(data);
     const result = yield auth_srvice_1.authService.loginUser(data);
     const { refreshToken } = result;
     res.cookie("refreshToken", refreshToken, { httpOnly: true, secure: false });

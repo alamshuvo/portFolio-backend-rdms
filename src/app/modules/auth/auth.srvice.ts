@@ -1,5 +1,5 @@
-import { UserRole } from "@prisma/client";
-import { prisma } from "../../../shared/prisma";
+import {   PrismaClient, UserRole } from "@prisma/client";
+
 import bcrypt from 'bcrypt'
 import config from "../../../config";
 import { JwtPayload, Secret } from "jsonwebtoken";
@@ -7,12 +7,13 @@ import generateToken from "../../../helpers/generateToken";
 import verifyToken from "../../../helpers/verifyToken";
 import ApiError from "../../errors/apiError";
 import status from "http-status";
+const prisma = new PrismaClient();
 const loginUser = async (payload: { email: string; password: string }) => {
     //check is user data exist
+ console.log(payload,"payload");
     const userData = await prisma.admin.findUnique({
       where: {
         email: payload.email,
-        role: UserRole.ADMIN,
       },
     });
     if (!userData) {

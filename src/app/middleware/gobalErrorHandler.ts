@@ -9,6 +9,7 @@ const globalErrorHandler = (
   next: NextFunction
 ) => {
   console.log(res.headersSent,"global");
+  console.log(err,"global");
   let statusCode = status.INTERNAL_SERVER_ERROR;
   let success = false;
   let message = err.name || err.message || "Something went wrong";

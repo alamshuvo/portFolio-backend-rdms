@@ -32,6 +32,7 @@ const insertIntoDb = (payload, user) => __awaiter(void 0, void 0, void 0, functi
     return projectDatas;
 });
 const getAllblogs = () => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("object");
     const allData = yield prisma_1.prisma.blogs.findMany({
         select: {
             id: true,

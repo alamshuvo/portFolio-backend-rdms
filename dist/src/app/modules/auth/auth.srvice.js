@@ -14,19 +14,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authService = void 0;
 const client_1 = require("@prisma/client");
-const prisma_1 = require("../../../shared/prisma");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const config_1 = __importDefault(require("../../../config"));
 const generateToken_1 = __importDefault(require("../../../helpers/generateToken"));
 const verifyToken_1 = __importDefault(require("../../../helpers/verifyToken"));
 const apiError_1 = __importDefault(require("../../errors/apiError"));
 const http_status_1 = __importDefault(require("http-status"));
+const prisma = new client_1.PrismaClient();
 const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     //check is user data exist
-    const userData = yield prisma_1.prisma.admin.findUnique({
+    console.log(payload, "payload");
+    const userData = yield prisma.admin.findUnique({
         where: {
             email: payload.email,
-            role: client_1.UserRole.ADMIN,
         },
     });
     if (!userData) {
@@ -56,7 +56,7 @@ const refreshToken = (token) => __awaiter(void 0, void 0, void 0, function* () {
     catch (error) {
         throw new Error("you are not authorized");
     }
-    const userData = yield prisma_1.prisma.admin.findUnique({
+    const userData = yield prisma.admin.findUnique({
         where: {
             email: decodedData === null || decodedData === void 0 ? void 0 : decodedData.email,
             role: client_1.UserRole.ADMIN,

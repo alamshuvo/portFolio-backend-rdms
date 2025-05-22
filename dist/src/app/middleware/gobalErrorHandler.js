@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const http_status_1 = __importDefault(require("http-status"));
 const globalErrorHandler = (err, req, res, next) => {
     console.log(res.headersSent, "global");
+    console.log(err, "global");
     let statusCode = http_status_1.default.INTERNAL_SERVER_ERROR;
     let success = false;
     let message = err.name || err.message || "Something went wrong";

@@ -17,7 +17,7 @@ const insertIntoDb = catchAsync(async (req: Request &{user?:IAuthUser}, res: Res
     });
   });
   const getAllBlogs = catchAsync(async (req: Request , res: Response) => {
-
+ 
     const result = await blogsService.getAllblogs();
     sendResponse(res, {
       statusCode: status.OK,

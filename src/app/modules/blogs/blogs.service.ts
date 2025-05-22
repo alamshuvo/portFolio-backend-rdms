@@ -23,6 +23,7 @@ const insertIntoDb = async (payload: Blogs, user: IAuthUser) => {
     return projectDatas;
   };
   const getAllblogs = async () => {
+    console.log("object");
     const allData = await prisma.blogs.findMany({
       select: {
         id: true,
